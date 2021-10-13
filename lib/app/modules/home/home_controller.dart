@@ -1,7 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final count = 0.obs;
+  static const tabLabels = [
+    '设置',
+    '播放列表',
+    '播客库',
+    '订阅',
+    '发现',
+  ];
+  static const tabIcons = [
+    Icons.settings,
+    Icons.list_alt_rounded,
+    Icons.library_books,
+    Icons.bookmark_add_rounded,
+    Icons.search_rounded
+  ];
   @override
   void onInit() {
     super.onInit();
@@ -14,5 +28,4 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

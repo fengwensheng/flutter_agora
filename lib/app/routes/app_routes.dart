@@ -5,8 +5,18 @@ abstract class Routes {
   Routes._();
 
   static const HOME = _Paths.HOME;
+  static const SETTING = _Paths.HOME + _Paths.SETTING;
+  static const SUBSCRIPTION = _Paths.HOME + _Paths.SUBSCRIPTION;
+  static const DISCOVER = _Paths.HOME + _Paths.DISCOVER;
+  static const PLAYLIST = _Paths.HOME + _Paths.PLAYLIST;
+  static const LIBRARY = _Paths.HOME + _Paths.LIBRARY;
 }
 
 abstract class _Paths {
   static const HOME = '/home';
+  static const SETTING = '/setting';
+  static const SUBSCRIPTION = '/subscription';
+  static const DISCOVER = '/discover';
+  static const PLAYLIST = '/playlist';
+  static const LIBRARY = '/library';
 }
