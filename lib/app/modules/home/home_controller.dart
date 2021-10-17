@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController with SingleGetTickerProviderMixin {
   static const tabLabels = [
     '设置',
     '播放列表',
@@ -16,9 +16,12 @@ class HomeController extends GetxController {
     Icons.bookmark_add_rounded,
     Icons.search_rounded
   ];
+  late TabController tabController;
+  PageController pageController = PageController();
   @override
   void onInit() {
     super.onInit();
+    tabController = TabController(length: tabLabels.length, vsync: this);
   }
 
   @override
@@ -28,4 +31,24 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
+
+  void onTab(int i) {
+    if (pageController.page == i) return;
+    pageController.jumpToPage(i);
+    ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${tabLabels[i]}',
+          textAlign: TextAlign.center,
+        ),
+        behavior: SnackBarBehavior.floating,
+        padding: EdgeInsets.symmetric(vertical: 7.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
+        ),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
 }

@@ -8,13 +8,12 @@ import 'package:get/get.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  void _onTab(int i) => controller.onTab(i);
+
   @override
-  Widget build(_) => DefaultTabController(
-        length: 5,
-        child: Scaffold(
-          appBar: _buildAppBar(),
-          body: _buildBody(),
-        ),
+  Widget build(_) => Scaffold(
+        appBar: _buildAppBar(),
+        body: _buildBody(),
       );
 
   AppBar _buildAppBar() => AppBar(
@@ -32,6 +31,8 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             TabBar(
+              onTap: _onTab,
+              controller: controller.tabController,
               indicator: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 color: Colors.grey[800],
@@ -68,7 +69,9 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget _buildBody() => TabBarView(
+  Widget _buildBody() => PageView(
+        controller: controller.pageController,
+        physics: NeverScrollableScrollPhysics(),
         children: [
           SettingView(),
           PlaylistView(),
