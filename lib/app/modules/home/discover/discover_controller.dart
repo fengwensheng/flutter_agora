@@ -1,7 +1,10 @@
+import 'package:flutter_agora/common/apis/discover_api.dart';
+import 'package:flutter_agora/common/models/discover_model/search_result_model.dart';
 import 'package:get/get.dart';
 
 class DiscoverController extends GetxController {
-  final count = 0.obs;
+  List<Result> searchResults = [];
+
   @override
   void onInit() {
     super.onInit();
@@ -14,5 +17,11 @@ class DiscoverController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
+
+  ///
+  void search(String keywords) async {
+    String data = await DiscoverApi.search(keywords: keywords);
+    searchResults = searchResultModelFromJson(data).results!;
+    update();
+  }
 }
