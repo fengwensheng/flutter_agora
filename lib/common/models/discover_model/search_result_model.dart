@@ -85,8 +85,8 @@ class Result {
   String? artworkUrl30;
   String? artworkUrl60;
   String? artworkUrl100;
-  int? collectionPrice;
-  int? trackPrice;
+  double? collectionPrice;
+  double? trackPrice;
   int? trackRentalPrice;
   int? collectionHdPrice;
   int? trackHdPrice;

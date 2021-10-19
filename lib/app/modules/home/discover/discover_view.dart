@@ -7,17 +7,18 @@ class DiscoverView extends GetView<DiscoverController> {
 
   @override
   Widget build(_) => GetBuilder<DiscoverController>(
-        builder: (c) => ListView.builder(
+        builder: (c) => ListView.separated(
+          padding: EdgeInsets.all(10),
           itemCount: c.searchResults.length + 1,
           itemBuilder: (_, i) =>
-              (i == 0) ? _buildSearchBar() : _buildResultRow(),
+              (i == 0) ? _buildSearchBar() : _buildResultRow(i - 1),
+          separatorBuilder: (_, i) => const SizedBox(height: 10),
         ),
       );
 
   Widget _buildSearchBar() => Container(
         alignment: Alignment.center,
         height: 40.0,
-        margin: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey[300]!,
@@ -40,5 +41,21 @@ class DiscoverView extends GetView<DiscoverController> {
         ),
       );
 
-  Widget _buildResultRow() => Text('@');
+  Widget _buildResultRow(int i) => Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+            child: Image.network(
+              '${controller.searchResults[i].artworkUrl100}',
+              width: 32,
+              height: 32,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            '${controller.searchResults[i].collectionName}',
+          ),
+        ],
+      );
 }

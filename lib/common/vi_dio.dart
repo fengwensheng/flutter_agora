@@ -12,6 +12,8 @@ class ViDio {
     //set base_url globally for every request
     BaseOptions baseOptions = BaseOptions(
       baseUrl: base_url,
+      connectTimeout: 20 * 1000,
+      receiveTimeout: 20 * 1000,
     );
     _dio = Dio(baseOptions);
   }

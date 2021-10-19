@@ -12,6 +12,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(_) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: _buildAppBar(),
         body: _buildBody(),
       );
