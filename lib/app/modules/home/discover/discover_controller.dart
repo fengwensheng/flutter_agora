@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_agora/common/apis/discover_api.dart';
 import 'package:flutter_agora/common/models/discover_model/search_result_model.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class DiscoverController extends GetxController {
   ///
   void search(String keywords) async {
     String data = await DiscoverApi.search(keywords: keywords);
-    searchResults = searchResultModelFromJson(data).results!;
+    searchResults = (await compute(searchResultModelFromJson, data)).results!;
     update();
   }
 }

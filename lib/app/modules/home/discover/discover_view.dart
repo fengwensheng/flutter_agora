@@ -41,21 +41,32 @@ class DiscoverView extends GetView<DiscoverController> {
         ),
       );
 
-  Widget _buildResultRow(int i) => Row(
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-            child: Image.network(
-              '${controller.searchResults[i].artworkUrl100}',
-              width: 32,
-              height: 32,
-              fit: BoxFit.cover,
+  Widget _buildResultRow(int i) => Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              child: Image.network(
+                '${controller.searchResults[i].artworkUrl100}',
+                width: 32,
+                height: 32,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            '${controller.searchResults[i].collectionName}',
-          ),
-        ],
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                '${controller.searchResults[i].collectionName}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       );
 }
