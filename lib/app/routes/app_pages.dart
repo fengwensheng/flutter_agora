@@ -1,5 +1,11 @@
+import 'package:flutter_agora/app/modules/podcast/podcast_binding.dart';
+import 'package:flutter_agora/app/modules/podcast/podcast_view.dart';
+import 'package:get/get.dart';
+
 import 'package:flutter_agora/app/modules/home/discover/discover_binding.dart';
 import 'package:flutter_agora/app/modules/home/discover/discover_view.dart';
+import 'package:flutter_agora/app/modules/home/home_binding.dart';
+import 'package:flutter_agora/app/modules/home/home_view.dart';
 import 'package:flutter_agora/app/modules/home/library/library_binding.dart';
 import 'package:flutter_agora/app/modules/home/library/library_view.dart';
 import 'package:flutter_agora/app/modules/home/playlist/playlist_binding.dart';
@@ -8,9 +14,6 @@ import 'package:flutter_agora/app/modules/home/setting/setting_binding.dart';
 import 'package:flutter_agora/app/modules/home/setting/setting_view.dart';
 import 'package:flutter_agora/app/modules/home/subscription/subscription_binding.dart';
 import 'package:flutter_agora/app/modules/home/subscription/subscription_view.dart';
-import 'package:get/get.dart';
-import 'package:flutter_agora/app/modules/home/home_binding.dart';
-import 'package:flutter_agora/app/modules/home/home_view.dart';
 
 part 'app_routes.dart';
 
@@ -51,6 +54,11 @@ class AppPages {
           binding: LibraryBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.PODCAST,
+      page: () => PodcastView(),
+      binding: PodcastBinding(),
     ),
   ];
 }

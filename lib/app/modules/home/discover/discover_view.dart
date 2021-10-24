@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_agora/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'discover_controller.dart';
 
 class DiscoverView extends GetView<DiscoverController> {
   void _search(String keywords) => controller.search(keywords);
+  void _toPodcast(String feedUrl) => Get.toNamed(
+        Routes.PODCAST,
+        arguments: feedUrl,
+      );
 
   @override
   Widget build(_) => GetBuilder<DiscoverController>(
         builder: (c) => ListView.separated(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           itemCount: c.searchResults.length + 1,
           itemBuilder: (_, i) =>
               (i == 0) ? _buildSearchBar() : _buildResultRow(i - 1),
@@ -41,32 +46,37 @@ class DiscoverView extends GetView<DiscoverController> {
         ),
       );
 
-  Widget _buildResultRow(int i) => Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+  Widget _buildResultRow(int i) => GestureDetector(
+        onTap: () => _toPodcast(
+          controller.searchResults[i].feedUrl!,
         ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-              child: Image.network(
-                '${controller.searchResults[i].artworkUrl100}',
-                width: 32,
-                height: 32,
-                fit: BoxFit.cover,
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          ),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                child: Image.network(
+                  '${controller.searchResults[i].artworkUrl100}',
+                  width: 32,
+                  height: 32,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                '${controller.searchResults[i].collectionName}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  '${controller.searchResults[i].collectionName}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 }

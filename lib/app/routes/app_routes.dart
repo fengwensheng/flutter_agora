@@ -10,6 +10,7 @@ abstract class Routes {
   static const DISCOVER = _Paths.HOME + _Paths.DISCOVER;
   static const PLAYLIST = _Paths.HOME + _Paths.PLAYLIST;
   static const LIBRARY = _Paths.HOME + _Paths.LIBRARY;
+  static const PODCAST = _Paths.PODCAST;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const DISCOVER = '/discover';
   static const PLAYLIST = '/playlist';
   static const LIBRARY = '/library';
+  static const PODCAST = '/podcast';
 }
