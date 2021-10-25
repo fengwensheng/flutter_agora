@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
-
 import 'podcast_controller.dart';
 
 class PodcastView extends GetView<PodcastController> {
+  void _play(String url) => controller.play(url);
+
   @override
   Widget build(_) => Scaffold(
         backgroundColor: Colors.white,
@@ -100,12 +99,7 @@ class PodcastView extends GetView<PodcastController> {
       );
 
   Widget _buildPodcastItem(int i) => GestureDetector(
-        onTap: () {
-          String? url = controller.rssFeed.items[i].enclosure?.url!;
-          AudioPlayer audioPlayer = AudioPlayer();
-          audioPlayer.setUrl('$url');
-          audioPlayer.play();
-        },
+        onTap: () => _play('${controller.rssFeed.items[i].enclosure?.url}'),
         child: Container(
           height: 120,
           padding: const EdgeInsets.all(16.0),

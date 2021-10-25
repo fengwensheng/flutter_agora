@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:dart_rss/dart_rss.dart';
+import 'package:flutter_agora/common/vi_audio_player.dart';
 import 'package:flutter_agora/common/vi_dio.dart';
 import 'package:get/get.dart';
 
@@ -19,13 +18,15 @@ class PodcastController extends GetxController {
     _setRssFeed();
   }
 
+  @override
+  void onClose() {}
+
   void _setRssFeed() async {
-    log(feedUrl);
     String xmlString = await ViDio().get(path: feedUrl);
     rssFeed = RssFeed.parse(xmlString);
     update();
   }
 
-  @override
-  void onClose() {}
+  ///play audio by supported online url
+  void play(String url) async => ViAudioPlayer().play(url);
 }
