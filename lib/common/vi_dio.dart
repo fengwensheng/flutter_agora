@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_agora/common/values/proxy.dart';
 import 'package:flutter_agora/common/values/server.dart';
 
 ///dio二次封装
@@ -16,6 +20,17 @@ class ViDio {
       receiveTimeout: 20 * 1000,
     );
     _dio = Dio(baseOptions);
+    //add http proxy
+    if (needProxy()) {
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (HttpClient client) {
+        client.findProxy = (uri) {
+          return 'PROXY $proxyServerUrl:8866';
+        };
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+      };
+    }
   }
 
   ///dio instance
