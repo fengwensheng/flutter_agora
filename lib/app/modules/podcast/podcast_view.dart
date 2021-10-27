@@ -53,7 +53,7 @@ class PodcastView extends GetView<PodcastController> {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                   child: Image.network(
-                    '${controller.rssFeed.image?.url}',
+                    '${controller.rssFeed.itunes?.image?.href}',
                     width: 32,
                     height: 32,
                     fit: BoxFit.cover,
@@ -115,7 +115,7 @@ class PodcastView extends GetView<PodcastController> {
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 child: Image.network(
-                  '${controller.rssFeed.image?.url}',
+                  '${controller.rssFeed.items[i].itunes?.image?.href ?? controller.rssFeed.itunes?.image?.href}',
                   width: 32,
                   height: 32,
                   fit: BoxFit.cover,
