@@ -1,6 +1,5 @@
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter_agora/app/routes/app_pages.dart';
-import 'package:flutter_agora/common/vi_audio_player.dart';
 import 'package:flutter_agora/common/vi_dio.dart';
 import 'package:get/get.dart';
 
@@ -34,6 +33,9 @@ class PodcastController extends GetxController {
   ///to episode detail, you can pay it on that
   void toEpisode(int i) => Get.toNamed(
         Routes.EPISODE,
-        arguments: rssFeed.items[i],
+        arguments: {
+          'rssFeed': rssFeed,
+          'i': i,
+        },
       );
 }
