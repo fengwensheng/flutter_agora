@@ -113,6 +113,7 @@ class PodcastView extends GetView<PodcastController> {
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 child: Image.network(
+                  //总归有一个可以吧？
                   '${controller.rssFeed.items[i].itunes?.image?.href ?? controller.rssFeed.itunes?.image?.href}',
                   width: 32,
                   height: 32,
@@ -139,6 +140,7 @@ class PodcastView extends GetView<PodcastController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
+                          //itunes duration 可能为空
                           '${controller.rssFeed.items[i].itunes?.duration?.inMinutes} MIN',
                           style: TextStyle(
                             color: Colors.grey[600],
