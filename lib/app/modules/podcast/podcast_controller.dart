@@ -1,5 +1,5 @@
 import 'package:dart_rss/dart_rss.dart';
-import 'package:flutter_agora/common/vi_audio_player.dart';
+import 'package:flutter_agora/app/routes/app_pages.dart';
 import 'package:flutter_agora/common/vi_dio.dart';
 import 'package:get/get.dart';
 
@@ -28,5 +28,14 @@ class PodcastController extends GetxController {
   }
 
   ///play audio by supported online url
-  void play(String url) async => ViAudioPlayer().play(url);
+  // void play(String url) async => ViAudioPlayer().play(url);
+
+  ///to episode detail, you can pay it on that
+  void toEpisode(int i) => Get.toNamed(
+        Routes.EPISODE,
+        arguments: {
+          'rssFeed': rssFeed,
+          'i': i,
+        },
+      );
 }

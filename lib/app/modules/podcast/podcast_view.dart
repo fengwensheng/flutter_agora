@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'podcast_controller.dart';
 
 class PodcastView extends GetView<PodcastController> {
-  void _play(String url) => controller.play(url);
+  // void _play(String url) => controller.play(url);
+  void _toEpisode(int i) => controller.toEpisode(i);
 
   @override
   Widget build(_) => Scaffold(
@@ -99,7 +100,8 @@ class PodcastView extends GetView<PodcastController> {
       );
 
   Widget _buildPodcastItem(int i) => GestureDetector(
-        onTap: () => _play('${controller.rssFeed.items[i].enclosure?.url}'),
+        // onTap: () => _play('${controller.rssFeed.items[i].enclosure?.url}'),
+        onTap: () => _toEpisode(i),
         child: Container(
           height: 120,
           padding: const EdgeInsets.all(16.0),
