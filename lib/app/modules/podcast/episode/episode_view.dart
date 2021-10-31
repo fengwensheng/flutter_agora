@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'episode_controller.dart';
 
 class EpisodeView extends GetView<EpisodeController> {
+  void _play() => controller.play();
+
   @override
   Widget build(_) => Scaffold(
         body: SafeArea(
@@ -86,27 +88,30 @@ class EpisodeView extends GetView<EpisodeController> {
             //toolbar
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: iconDatas.map((e) => _buildIconButton(e)).toList(),
+              children: [
+                _buildIconButton(Icons.ios_share_sharp),
+                _buildIconButton(Icons.check),
+                GetBuilder<EpisodeController>(
+                  builder: (c) => _buildIconButton(
+                    c.isPlaying ? Icons.pause : Icons.play_arrow_outlined,
+                    onPressed: _play,
+                  ),
+                ),
+                _buildIconButton(Icons.playlist_add),
+                _buildIconButton(Icons.star_border),
+              ],
             ),
           ],
         ),
       );
 
-  ///toolbar icons
-  static const iconDatas = [
-    Icons.ios_share_sharp,
-    Icons.check,
-    Icons.play_arrow_outlined,
-    Icons.playlist_add,
-    Icons.star_border,
-  ];
-
   ///icon button
   Widget _buildIconButton(
-    IconData iconData,
-  ) =>
+    IconData iconData, {
+    VoidCallback? onPressed,
+  }) =>
       IconButton(
-        onPressed: () {},
+        onPressed: onPressed,
         icon: Icon(iconData),
         padding: EdgeInsets.zero,
         alignment: Alignment.bottomCenter,
@@ -115,7 +120,10 @@ class EpisodeView extends GetView<EpisodeController> {
 
   ///text description about this episode
   Widget _buildDescription() => Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: 24.0,
+          vertical: 16.0,
+        ),
         child: Text(
           '${controller.rssItem.description}',
           style: TextStyle(
@@ -126,15 +134,46 @@ class EpisodeView extends GetView<EpisodeController> {
       );
 
   ///底部信息栏
-  Widget _buildFootInfo() => _buildInfoItemRow();
+  Widget _buildFootInfo() => Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 24.0,
+        ),
+        child: Column(
+          children: [
+            _buildInfoItemRow(
+              iconData: Icons.card_travel_sharp,
+              title: '${controller.rssFeed.itunes?.owner?.email}',
+            ),
+            SizedBox(height: 10),
+            _buildInfoItemRow(
+              iconData: Icons.record_voice_over_outlined,
+              title: '${controller.rssFeed.title}',
+            ),
+            SizedBox(height: 10),
+            _buildInfoItemRow(
+              iconData: Icons.link,
+              title: '${controller.rssFeed.link}',
+            ),
+            SizedBox(height: 10),
+            _buildInfoItemRow(
+              iconData: Icons.category_outlined,
+              title:
+                  '${controller.rssFeed.itunes?.categories.map((e) => e?.category).toList().join(', ')}',
+            )
+          ],
+        ),
+      );
 
   ///
-  Widget _buildInfoItemRow() => Row(
+  Widget _buildInfoItemRow({
+    required IconData iconData,
+    required String title,
+  }) =>
+      Row(
         children: [
-          Icon(Icons.card_travel_sharp),
-          Text(
-            '${controller.rssFeed.title}',
-          ),
+          Icon(iconData),
+          const SizedBox(width: 18.0),
+          Text('$title'),
         ],
       );
 }

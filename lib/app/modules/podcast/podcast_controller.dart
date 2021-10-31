@@ -6,6 +6,13 @@ import 'package:get/get.dart';
 class PodcastController extends GetxController {
   final String feedUrl = Get.arguments as String;
   RssFeed rssFeed = RssFeed();
+  //current palying episode url
+  String cUrl = '';
+
+  void set currentUrl(String url) {
+    cUrl = url;
+    update();
+  }
 
   @override
   void onInit() {
@@ -27,9 +34,6 @@ class PodcastController extends GetxController {
     update();
   }
 
-  ///play audio by supported online url
-  // void play(String url) async => ViAudioPlayer().play(url);
-
   ///to episode detail, you can pay it on that
   void toEpisode(int i) => Get.toNamed(
         Routes.EPISODE,
@@ -38,4 +42,7 @@ class PodcastController extends GetxController {
           'i': i,
         },
       );
+
+  ///
+  bool isPlayingItem(String url) => url == cUrl;
 }

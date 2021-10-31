@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_agora/common/widget/vi_keepalive_wrapper.dart';
 import 'package:get/get.dart';
 import 'podcast_controller.dart';
 
 class PodcastView extends GetView<PodcastController> {
-  // void _play(String url) => controller.play(url);
   void _toEpisode(int i) => controller.toEpisode(i);
 
+  bool _isPlayingItem(String url) => controller.isPlayingItem(url);
+
   @override
-  Widget build(_) => Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: GetBuilder<PodcastController>(
-            builder: (c) => c.rssFeed.title == null
-                ? Center(child: CircularProgressIndicator())
-                : ListView.separated(
-                    padding: const EdgeInsets.all(10),
-                    itemCount: c.rssFeed.items.length + 2,
-                    separatorBuilder: (_, i) => const SizedBox(height: 10),
-                    itemBuilder: (_, i) {
-                      if (i == 0) {
-                        return _buildHeaderInfo();
-                      } else if (i == 1) {
-                        return SizedBox();
-                      } else {
-                        return _buildPodcastItem(i - 2);
-                      }
-                    },
-                  ),
+  Widget build(_) => ViKeepAliveWrapper(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: GetBuilder<PodcastController>(
+              builder: (c) => c.rssFeed.title == null
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.separated(
+                      padding: const EdgeInsets.all(10),
+                      itemCount: c.rssFeed.items.length + 2,
+                      separatorBuilder: (_, i) => const SizedBox(height: 10),
+                      itemBuilder: (_, i) {
+                        if (i == 0) {
+                          return _buildHeaderInfo();
+                        } else if (i == 1) {
+                          return SizedBox();
+                        } else {
+                          return _buildPodcastItem(i - 2);
+                        }
+                      },
+                    ),
+            ),
           ),
         ),
       );
@@ -100,7 +104,6 @@ class PodcastView extends GetView<PodcastController> {
       );
 
   Widget _buildPodcastItem(int i) => GestureDetector(
-        // onTap: () => _play('${controller.rssFeed.items[i].enclosure?.url}'),
         onTap: () => _toEpisode(i),
         child: Container(
           height: 120,
@@ -128,21 +131,35 @@ class PodcastView extends GetView<PodcastController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      '${controller.rssFeed.items[i].title}',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        height: 1.5,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${controller.rssFeed.items[i].title}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              height: 1.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: _isPlayingItem(
+                            '${controller.rssFeed.items[i].enclosure?.url}',
+                          ),
+                          child: Icon(
+                            Icons.equalizer,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          //itunes duration 可能为空
+                          //itunes duration maybe a null
                           '${controller.rssFeed.items[i].itunes?.duration?.inMinutes} MIN',
                           style: TextStyle(
                             color: Colors.grey[600],

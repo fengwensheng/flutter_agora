@@ -8,9 +8,12 @@ class ViAudioPlayer {
   }
   late AudioPlayer _audioPlayer;
 
-  ///
+  ///play
   Future<void> play(String url) async {
     await _audioPlayer.setUrl(url);
     _audioPlayer.play();
   }
+
+  ///pause
+  Future<void> pause() async => _audioPlayer.pause();
 }
