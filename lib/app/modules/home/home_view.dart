@@ -70,15 +70,60 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget _buildBody() => PageView(
-        controller: controller.pageController,
-        physics: NeverScrollableScrollPhysics(),
+  Widget _buildBody() => Stack(
         children: [
-          SettingView(),
-          PlaylistView(),
-          LibraryView(),
-          SubscriptionView(),
-          DiscoverView(),
+          PageView(
+            controller: controller.pageController,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              SettingView(),
+              PlaylistView(),
+              LibraryView(),
+              SubscriptionView(),
+              DiscoverView(),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: _buildAudioBar(),
+          ),
         ],
+      );
+
+  Widget _buildAudioBar() => Container(
+        height: 53,
+        margin: EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 15,
+        ),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(39, 37, 45, 1.0),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FlutterLogo(),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.fast_rewind),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.play_arrow_outlined,
+                size: 35,
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.fast_forward),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.restaurant_menu),
+            ),
+          ],
+        ),
       );
 }
