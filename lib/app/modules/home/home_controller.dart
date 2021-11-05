@@ -47,7 +47,10 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
           textAlign: TextAlign.center,
         ),
         behavior: SnackBarBehavior.floating,
-        padding: EdgeInsets.symmetric(vertical: 7.0),
+        margin: EdgeInsets.symmetric(
+          vertical: 50,
+          horizontal: 10,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
         ),
