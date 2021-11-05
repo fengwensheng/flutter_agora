@@ -65,7 +65,9 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     if (isPlaying) {
       ViAudioPlayer().pause();
     } else {
-      ViAudioPlayer().play(url);
+      ViAudioPlayer().isInit()
+          ? ViAudioPlayer().play(url)
+          : ViAudioPlayer().play(null);
     }
     isPlaying = !isPlaying;
     update();
