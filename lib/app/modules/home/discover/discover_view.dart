@@ -58,6 +58,7 @@ class DiscoverView extends GetView<DiscoverController> {
           ),
           child: Row(
             children: [
+              ///TODO can encapsulate it
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 child: Image.network(

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_agora/app/modules/home/audio_bar_model.dart';
 import 'package:flutter_agora/app/modules/home/discover/discover_view.dart';
 import 'package:flutter_agora/app/modules/home/library/library_view.dart';
 import 'package:flutter_agora/app/modules/home/playlist/playlist_view.dart';
 import 'package:flutter_agora/app/modules/home/setting/setting_view.dart';
 import 'package:flutter_agora/app/modules/home/subscription/subscription_view.dart';
+import 'package:flutter_agora/common/values/values.dart';
 import 'package:get/get.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   void _onTab(int i) => controller.onTab(i);
+  void _play(String url) => controller.play(url);
 
   @override
   Widget build(_) => Scaffold(
@@ -83,18 +86,25 @@ class HomeView extends GetView<HomeController> {
               DiscoverView(),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: _buildAudioBar(),
+          SimpleBuilder(
+            builder: (_) => controller.box.read<String>(audioBarKey) == null
+                ? const SizedBox()
+                : Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _buildAudioBar(
+                      audioBarModelFromJson(
+                          controller.box.read<String>(audioBarKey)!),
+                    ),
+                  ),
           ),
         ],
       );
 
-  Widget _buildAudioBar() => Container(
+  Widget _buildAudioBar(AudioBarModel audioBar) => Container(
         height: 53,
         margin: EdgeInsets.symmetric(
           horizontal: 10,
-          vertical: 15,
+          vertical: 20,
         ),
         decoration: BoxDecoration(
           color: Color.fromRGBO(39, 37, 45, 1.0),
@@ -103,16 +113,25 @@ class HomeView extends GetView<HomeController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            FlutterLogo(),
+            ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              child: Image.network(
+                '${audioBar.image}',
+                width: 32,
+                height: 32,
+                fit: BoxFit.cover,
+              ),
+            ),
             IconButton(
               onPressed: () {},
               icon: Icon(Icons.fast_rewind),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.play_arrow_outlined,
-                size: 35,
+              onPressed: () => _play(audioBar.url!),
+              icon: GetBuilder<HomeController>(
+                builder: (_) => controller.isPlaying
+                    ? Icon(Icons.pause, size: 35)
+                    : Icon(Icons.play_arrow_outlined, size: 35),
               ),
             ),
             IconButton(
