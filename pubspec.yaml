@@ -13,6 +13,7 @@ dependencies:
   dio: ^4.0.0
   dart_rss: ^2.0.1
   just_audio: ^0.9.14
+  get_storage: ^2.0.3
 
 dev_dependencies:
   flutter_lints: ^1.0.0
