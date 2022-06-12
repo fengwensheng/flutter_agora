@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController with SingleGetTickerProviderMixin {
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   static const tabLabels = [
     '设置',
     '播放列表',
